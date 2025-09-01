@@ -36,7 +36,7 @@ router.delete('/delete/:id', (req, res, next) => {
             }
             if (result.rowCount === 0) {
                 const error = new Error('Task not found')
-                return err.status = 404 
+                error.status = 404 
                 return next(error)
             }
             return res.status(200).json({id:id})

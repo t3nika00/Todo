@@ -1,6 +1,6 @@
 import fs from 'fs'
 import path from 'path'
-import {pool} from './db.js'
+import { pool } from './db.js'
 import jwt from 'jsonwebtoken';
 import { hash } from 'bcrypt';
 
@@ -12,32 +12,33 @@ const initializeTestDb = () => {
     pool.query(sql, (err) => {
         if (err) {
             console.error("Error initializing test database", err)
-        }else {
+        } else {
             console.log("Test database initialized successfully")
         }
     })
 }
 
-const insertTestUser = (email, password) => {
-    hash(password, 10, (err, hashedPassword) => {
+const insertTestUser = (user) => {
+    hash(user.password, 10, (err, hashedPassword) => {
         if (err) {
             console.error('Error hashing password:', err)
             return
         }
-    pool.query('INSERT INTO account (email, password) VALUES ($1, $2)',
-            [email, hashedPassword],
+        pool.query('INSERT INTO account (email, password) VALUES ($1, $2)',
+            [user.email, hashedPassword],
             (err, result) => {
-                if(err) {
-                    console.error('Error inserting test user', err)
+                if (err) {
+                    console.error('Error inserting test user:', err)
                 } else {
-                    console.log('Test user inserted uccessfully', result)
+                    console.log('Test user inserted successfully')
                 }
             })
     })
 }
 
 const getToken = (email) => {
-    return jwt.sign({email}, process.env.JWT_SECRET)
+    return jwt.sign({ email }, process.env.JWT_SECRET)
 }
 
-export {initializeTestDb, insertTestUser, getToken}
+export { initializeTestDb, insertTestUser, getToken }
+

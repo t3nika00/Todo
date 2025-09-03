@@ -1,7 +1,7 @@
 import pkg from 'pg'
 import dotenv from 'dotenv'
 
-const enviroment = process.env.NODE_ENV
+const enviroment = process.env.NODE_ENV || 'development'
 
 dotenv.config()
 

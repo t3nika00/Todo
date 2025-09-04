@@ -18,19 +18,19 @@ const initializeTestDb = () => {
     })
 }
 
-const insertTestUser = (user) => {
-    hash(user.password, 10, (err, hashedPassword) => {
+const insertTestUser = (email, password) => {
+    hash(password, 10, (err, hashedPassword) => {
         if (err) {
             console.error('Error hashing password:', err)
             return
         }
-        pool.query('INSERT INTO account (email, password) VALUES ($1, $2)',
-            [user.email, hashedPassword],
+    pool.query('INSERT INTO account (email, password) VALUES ($1, $2)',
+            [email, hashedPassword],
             (err, result) => {
-                if (err) {
-                    console.error('Error inserting test user:', err)
+                if(err) {
+                    console.error('Error inserting test user', err)
                 } else {
-                    console.log('Test user inserted successfully')
+                    console.log('Test user inserted uccessfully', result)
                 }
             })
     })

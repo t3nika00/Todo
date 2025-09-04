@@ -62,7 +62,7 @@ describe("Testing basic database functionality", () => {
 describe("Testing user managment", () => {
 const user = {email: "foo2@test.com", password: "password123"}
     before(() => {
-        insertTestUser(user)
+        insertTestUser(user.email, user.password)
     })
     it("should sign up", async () => {
         const newUser = {email: "foo@test.com", password: "password123"}

@@ -4,6 +4,7 @@ import axios from 'axios'
 
 
 export default function UserProvider({ children }) {
+
     const userFromStorage = sessionStorage.getItem('user')
     const [user, setUser] = useState(userFromStorage ? JSON.parse(userFromStorage) : { email: '', password: '' })
 
@@ -13,16 +14,17 @@ export default function UserProvider({ children }) {
         setUser({ email: '', password: '' })
     }
 
-    const signIn = async (email, password) => {
+    const signIn = async () => {
         const headers = { headers: { 'Content-Type': 'application/json' } }
-        const response = await axios.post(`${import.meta.env.VITE_API_URL}/user/signin`, JSON.stringify({ user: { email, password } }), headers)
+        const response = await axios.post(`${import.meta.env.VITE_API_URL}/user/signin`, JSON.stringify({user: user}),
+headers)
         setUser(response.data)
         sessionStorage.setItem('user', JSON.stringify(response.data))
     }
 
     return (
-    <UserContext.Provider value={{ user, setUser, signUp, signIn }}>
-        {children}
-    </UserContext.Provider>
-)
+        <UserContext.Provider value={{ user, setUser, signUp, signIn }}>
+            {children}
+        </UserContext.Provider>
+    )
 }

@@ -6,6 +6,7 @@ const enviroment = process.env.NODE_ENV || 'development'
 dotenv.config()
 
 const port = process.env.port
+
 const { Pool } = pkg
 
 const openDb = () => {

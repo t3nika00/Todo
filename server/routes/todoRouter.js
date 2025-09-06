@@ -1,9 +1,13 @@
 import { pool } from "../helper/db.js"
-import { auth } from "../helper/auth.js";
+import { auth } from "../helper/auth.js"
 import { Router } from 'express'
+import { getTasks } from '../controllers/TaskController.js'
 
 const router = Router()
 
+router.get("/", getTasks)
+
+/*
 router.get('/', (req, res, next) => {
     pool.query('SELECT * FROM task', (err, result) => {
         if (err) {
@@ -12,6 +16,7 @@ router.get('/', (req, res, next) => {
         res.status(200).json(result.rows || [])
     })
 })
+*/
 
 router.post('/create', auth, (req, res, next) => {
     const { task } = req.body
